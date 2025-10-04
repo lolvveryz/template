@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: my-django
+  tag: latest
+  pullPolicy: Never
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: "nginx"
+  host: django.local
+
+env:
+  DJANGO_SETTINGS_MODULE: "djangoSite.settings"
+  DEBUG: "False"
