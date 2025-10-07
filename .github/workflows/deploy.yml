@@ -62,7 +62,7 @@ jobs:
         tag_name: "chart-${{ github.sha }}"
         name: "Packaged chart for ${{ github.sha }}"
       env:
-        TOKEN: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
     - name: Upload chart to release
       uses: actions/upload-release-asset@v1
@@ -72,4 +72,4 @@ jobs:
         asset_name: my-django-chart-${{ github.sha }}.tgz
         asset_content_type: application/gzip
       env:
-        TOKEN: ${{ secrets.TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
