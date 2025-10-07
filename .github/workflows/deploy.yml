@@ -45,9 +45,12 @@ jobs:
       uses: azure/setup-helm@v3
 
     - name: Package Helm chart
+      id: package_chart
       run: |
         mkdir -p ${{ env.CHART_PACKAGE_DIR }}
         helm package "${{ env.CHART_DIR }}" --destination "${{ env.CHART_PACKAGE_DIR }}"
+        PACKAGE=$(ls ${{ env.CHART_PACKAGE_DIR }}/*.tgz | head -n 1)
+        echo "chart_path=$PACKAGE" >> $GITHUB_OUTPUT
 
     - name: Upload packaged chart as artifact
       uses: actions/upload-artifact@v4
@@ -68,8 +71,9 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ env.CHART_PACKAGE_DIR }}/*.tgz
-        asset_name: my-django-chart-${{ github.sha }}.tgz
+        asset_path: ${{ steps.package_chart.outputs.chart_path }}
+        asset_name: $(basename ${{ steps.package_chart.outputs.chart_path }})
         asset_content_type: application/gzip
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
+
