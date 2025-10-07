@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: my-django
+  repository: ghcr.io/lolvveryz/template
   tag: latest
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
@@ -13,6 +13,18 @@ ingress:
   enabled: true
   className: "nginx"
   host: django.local
+
+postgresql:
+  enabled: true
+  auth:
+    username: "user"
+    password: "password"
+    database: "mydb"
+
+redis:
+  enabled: true
+  auth:
+    enabled: false
 
 env:
   DJANGO_SETTINGS_MODULE: "djangoSite.settings"
