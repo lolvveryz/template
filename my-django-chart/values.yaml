@@ -5,9 +5,6 @@ image:
   tag: latest
   pullPolicy: IfNotPresent
   
-imagePullSecrets:
-  - name: ghcr-secret
-  
 service:
   type: ClusterIP
   port: 8000
