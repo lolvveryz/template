@@ -67,6 +67,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
+    - name: Push Helm Chart to GHCR
+      run: |
+        helm registry login ghcr.io -u ${{ github.actor }} -p ${{ secrets.TOKEN }}
+        helm push charts-output/my-django-chart-*.tgz oci://ghcr.io/${{ github.repository_owner }}/$(basename $GITHUB_REPOSITORY)
+
     - name: Upload chart to release
       uses: actions/upload-release-asset@v1
       with:
