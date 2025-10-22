@@ -4,7 +4,7 @@ image:
   repository: ghcr.io/lolvveryz/template
   tag: latest
   pullPolicy: IfNotPresent
-  
+
 imagePullSecrets:
   - name: ghcr-secret
   
